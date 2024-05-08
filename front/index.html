@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Usuario</title>
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Enlace a tu archivo CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container-main">
+        <h2>Crear Usuario</h2>
+        <form id="form-crear-usuario"> <!-- Se elimina el action para usar JS -->
+            <div class="form-group">
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" name="usuario" maxlength="15" required placeholder="Ingrese su usuario">
+            </div>
+
+            <div class="form-group">
+                <label for="pass">Contraseña</label>
+                <input type="password" id="pass" name="pass" maxlength="15" required placeholder="Ingrese su contraseña">
+            </div>
+
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" maxlength="50" required placeholder="Ingrese su nombre">
+            </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" maxlength="50" placeholder="Ingrese su apellido">
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Crear Usuario</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Incluir Axios -->
+    <script src="config.js"></script> <!-- Tu archivo JavaScript para manejar el POST -->
+</body>
+</html>

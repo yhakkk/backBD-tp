@@ -1,0 +1,65 @@
+/* Usar la fuente de Google Fonts */
+body {
+    font-family: 'Roboto', sans-serif; /* Aplicar la fuente Roboto */
+    background-color: #f5f5f5; /* Fondo suave para el cuerpo */
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.container-main {
+    max-width: 600px; /* Ancho máximo del formulario */
+    margin: 50px auto; /* Centrar el contenedor en la pantalla */
+    padding: 20px;
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombras para dar profundidad */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Título del formulario */
+.container-main h2 {
+    text-align: center; /* Centrar el texto */
+    color: #333333; /* Color del texto */
+    font-weight: 700; /* Negrita */
+}
+
+/* Estilo de los grupos del formulario */
+.form-group {
+    margin-bottom: 15px; /* Espaciado entre los grupos */
+}
+
+/* Estilo de las etiquetas */
+.form-group label {
+    display: block; /* Asegurar que las etiquetas ocupen una línea completa */
+    font-weight: 700; /* Negrita */
+    color: #555555; /* Color del texto */
+    margin-bottom: 5px; /* Espaciado entre la etiqueta y el campo */
+}
+
+/* Estilo de los campos de entrada */
+.form-group input {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 10px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño del texto */
+    border: 1px solid #cccccc; /* Borde gris */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #f9f9f9; /* Fondo claro */
+}
+
+/* Estilo del botón */
+.form-group button {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 10px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño del texto */
+    color: #ffffff; /* Texto blanco */
+    background-color: #007bff; /* Azul para el botón */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+    font-weight: 700; /* Negrita */
+}
+
+/* Cambiar el color del botón al pasar el mouse */
+.form-group button:hover {
+    background-color: #0056b3; /* Azul más oscuro */
+}
