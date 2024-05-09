@@ -27,6 +27,7 @@ const pool = new Pool({
           pass varchar(15) NOT NULL,
           nombre varchar(50) NOT NULL,
           apellido varchar(50),
+          habilitado int,
           created_at TIMESTAMP DEFAULT NOW()
         )
       `);

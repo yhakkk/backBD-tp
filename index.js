@@ -1,9 +1,11 @@
 const express = require('express');
 require('dotenv').config();
 const axios = require("axios")
+const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT;
 app.use(express.json());
+app.use(cors());
 
 
 app.post('/crear_usuario', async (req, res) => {
