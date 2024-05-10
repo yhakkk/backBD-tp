@@ -44,7 +44,7 @@ const pool = new Pool({
     try {
         const client = await pool.connect();
         const result = await client.query(
-            'INSERT INTO usuario (usuario, pass, nombre, apellido) VALUES ($1, $2, $3, $4) RETURNING *',
+            'INSERT INTO usuario (usuario, pass, nombre, apellido,habilitado) VALUES ($1, $2, $3, $4,1) RETURNING *',
             [usuario, pass, nombre, apellido]
         );
         client.release();
