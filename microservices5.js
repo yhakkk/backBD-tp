@@ -34,6 +34,7 @@ const generateToken = (user) => {
 };
 
 app.post('/login', (req, res) => {
+  
   const { username, password } = req.body;
   //Lógica de user y pass
   if (username === 'tomas' && password === '1234') {
