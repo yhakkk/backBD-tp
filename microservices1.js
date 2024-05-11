@@ -27,7 +27,7 @@ const pool = new Pool({
           pass varchar(15) NOT NULL,
           nombre varchar(50) NOT NULL,
           apellido varchar(50),
-          habilitado int,
+          habilitado int DEFAULT 1,
           created_at TIMESTAMP DEFAULT NOW()
         )
       `);
@@ -44,7 +44,7 @@ const pool = new Pool({
     try {
         const client = await pool.connect();
         const result = await client.query(
-            'INSERT INTO usuario (usuario, pass, nombre, apellido,habilitado) VALUES ($1, $2, $3, $4,1) RETURNING *',
+            'INSERT INTO usuario (usuario, pass, nombre, apellido) VALUES ($1, $2, $3, $4) RETURNING *',
             [usuario, pass, nombre, apellido]
         );
         client.release();
