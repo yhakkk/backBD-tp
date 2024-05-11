@@ -67,6 +67,11 @@ const pool = new Pool({
     }
   });
   
+  app.get(`/all_users/:id`, async (req,res) =>{
+    
+
+
+  });
   
 
 

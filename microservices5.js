@@ -1,13 +1,22 @@
 const express = require('express');
 const axios = require('axios');
 require('dotenv').config();
-
+const { Pool } = require("pg");
 const app = express();
 const PORT6 = process.env.PORT6;
  
+app.use(express.json());
 
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl:{
+      rejectUnauthorized:false
+
+  }
+});
 
 // Verificar el token JWT
 const verifyToken = (req, res, next) => {
@@ -33,15 +42,40 @@ const generateToken = (user) => {
   return jwt.sign(user, JWT_SECRET, { expiresIn: '1h' });
 };
 
-app.post('/login', (req, res) => {
-  
+app.post('/login', async (req, res) => {
+  console.log(req.body)
   const { username, password } = req.body;
-  //Lógica de user y pass
-  if (username === 'tomas' && password === '1234') {
-    const token = generateToken({ username });
-    res.json({ token }); //Devuelve token con 1h. de validez
-  } else {
-    res.status(401).json({ error: 'Credenciales incorrectas' });
+ 
+   try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM usuario WHERE usuario = $1 AND pass = $2', [username, password]);
+    client.release();
+
+    if (result.rows.length === 0) {
+      // Si el usuario no existe o las credenciales son incorrectas, responde con un error 401
+      return res.status(401).json({ error: 'Credenciales incorrectas' });
+    }
+
+    const user = result.rows[0];
+
+    // Si las credenciales son correctas, genera un token y responde con él
+    const token = jwt.sign({ username: user.usuario }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.json({ token });
+  } catch (error) {
+    console.error('Error al realizar la consulta a la base de datos', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.get('/mercadolibre', verifyToken, async (req, res) => {
+  const busqueda = req.query.q;
+  try {
+    const response = await axios.get(`https://api.mercadolibre.com/sites/MLA/search?q=${busqueda}`);
+    res.status(200).json(response.data);
+    
+  } catch (error) {
+    console.error('Error al comunicarse con la API de ML:', error);
+    res.status(500).json({ error: 'Error al mostrar los datos' });
   }
 });
 
