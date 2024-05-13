@@ -87,6 +87,7 @@ app.post('/asignar_rol', async (req, res) => {
 });
 
 
+// Endpoint para obtener los roles de un usuario
 app.get('/usuario_roles', async (req, res) => {
   try {
     const client = await pool.connect();
@@ -113,5 +114,5 @@ app.get('/usuario_roles', async (req, res) => {
 });
 
 app.listen(PORT3, () => {
-  console.log(`Servidor de suma corriendo en http://localhost:${PORT3}`);
+  console.log(`Servidor microservices2.js corriendo en http://localhost:${PORT3}`);
 });
