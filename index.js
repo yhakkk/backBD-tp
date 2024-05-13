@@ -1,17 +1,18 @@
 const express = require('express');
-require('dotenv').config();
-const axios = require("axios")
-const cors = require("cors");
-const app = express();
+require('dotenv').config();// Cargar variables de entorno desde el archivo .env
+const axios = require("axios") //Axios, para realizar solicitudes HTTP
+const cors = require("cors");//Middleware para habilitar CORS
+const app = express();//Instancia de Express
 
-const PORT = process.env.PORT ;
-app.use(express.json());
-app.use(cors());
+const PORT = process.env.PORT ; // Puerto de ejecución, obtenido desde las variables de entorno (archivo .env)
+app.use(express.json()); //Middleware para analizar el cuerpo de las solcitudes como jSON
+app.use(cors()); //Habilitar CORS
 
-const { verifyToken } = require('./microservices5');
+const { verifyToken } = require('./microservices5'); // Importar la función verifyToken desde el microservicio5
 
 //Microservices1 - Usuario
 
+//Endpoint para crear un usuario nuevo
 app.post('/crear_usuario', async (req, res) => {
   try {
       const response = await axios.post(`http://localhost:6005/usuario_nuevo`, req.body);
@@ -22,7 +23,7 @@ app.post('/crear_usuario', async (req, res) => {
   }
 });
 
-
+//Endpoint para obtener todos los usuarios
 app.get('/usuarios', async (req,res) =>{
     try {
       const response = await axios.get(`http://localhost:6005/all_users`, req.body);
@@ -32,6 +33,7 @@ app.get('/usuarios', async (req,res) =>{
         res.status(500).json({error: 'Error al mostrar los usuarios'})
     }
 });
+//Endpoint para obtener usuarios habilitados
 app.get('/usuarios_habilitados', async (req,res) =>{
     try {
       const response = await axios.get(`http://localhost:6005/all_users_habilitados`, req.body);
@@ -41,6 +43,7 @@ app.get('/usuarios_habilitados', async (req,res) =>{
         res.status(500).json({error: 'Error al mostrar los usuarios'})
     }
 });
+//Endpoint para obtener usuarios deshabilitados
 app.get('/usuarios_deshabilitados', async (req,res) =>{
     try {
       const response = await axios.get(`http://localhost:6005/all_users_deshabilitados`, req.body);
@@ -80,7 +83,7 @@ app.patch('/deshabilitar_usuario/:id', async (req,res) =>{
 
 //Roles
 
-
+//Endpoint para crear rol
 app.post('/crear_rol', async (req,res) =>{
     try {
       const response = await axios.post(`http://localhost:6001/roles`, req.body);
@@ -90,7 +93,7 @@ app.post('/crear_rol', async (req,res) =>{
       res.status(500).json({error: "Error al subir el rol."})
     }
 });
-
+//Endpoint para asignar rol
 app.post('/asignar_rol', async (req,res) =>{
 
     try {
@@ -103,7 +106,7 @@ app.post('/asignar_rol', async (req,res) =>{
     }
 });
 
-
+//Endpoint para obtener los roles de un usuario
 app.get('/rol_usuario', async (req,res) => {
     try {
       const response = await axios.get('http://localhost:6001/usuario_roles');
@@ -116,7 +119,7 @@ app.get('/rol_usuario', async (req,res) => {
 });
 
 //Login-AUTH-API
-
+//Endpoint para obtener un token JWT e iniciar sesión 
 app.post('/login', async (req, res) => {
   try {
     const response = await axios.post('http://localhost:6006/login', req.body);
@@ -142,7 +145,7 @@ app.get('/mercadolibre', verifyToken, async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor de suma corriendo en http://localhost:${PORT}`);
+    console.log(`Servidor index.js corriendo en http://localhost:${PORT}`);
   });
 
 
