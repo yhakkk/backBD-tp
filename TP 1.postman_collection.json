@@ -1,0 +1,195 @@
+{
+	"info": {
+		"_postman_id": "43df56b2-3df7-4616-b823-c206e5774b2f",
+		"name": "TP 1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26681235"
+	},
+	"item": [
+		{
+			"name": "Login-Token-API",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"yhak\",\r\n    \"password\":  \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:3005/login/"
+					},
+					"response": []
+				},
+				{
+					"name": "Busqueda",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:3005/mercadolibre?q=Vaper",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"mercadolibre"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "Vaper"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Habilitar / Deshabilitar Usuario",
+			"item": [
+				{
+					"name": "Deshabilitar Usuario",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": "localhost:6003/deshabilitar_usuario/2"
+					},
+					"response": []
+				},
+				{
+					"name": "Habilitar Usuario",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": "localhost:6003/habilitar_usuario/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Crear Usario",
+			"item": [
+				{
+					"name": "Usuarios Habilitados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:3005/usuarios_habilitados"
+					},
+					"response": []
+				},
+				{
+					"name": "Usuarios Deshabilitados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:3005/usuarios_deshabilitados"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"usuario\":\"pepe\",\r\n    \"pass\":\"213\",\r\n    \"nombre\":\"Papa\",\r\n    \"apellido\": \"Pure\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:3005/crear_usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:3005/usuarios"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "Crear Rol",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:3005/crear_rol"
+					},
+					"response": []
+				},
+				{
+					"name": "Asignar Rol",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"usuario_id\":10,\r\n    \"rol_id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:3005/asignar_rol"
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Roles/Usuarios asignados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:3005/rol_usuario"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
