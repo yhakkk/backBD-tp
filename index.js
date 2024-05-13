@@ -32,6 +32,24 @@ app.get('/usuarios', async (req,res) =>{
         res.status(500).json({error: 'Error al mostrar los usuarios'})
     }
 });
+app.get('/usuarios_habilitados', async (req,res) =>{
+    try {
+      const response = await axios.get(`http://localhost:6005/all_users_habilitados`, req.body);
+      res.status(201).json(response.data);
+    } catch (error) {
+        console.error('Error al comunicarse con el microservicio:', error);
+        res.status(500).json({error: 'Error al mostrar los usuarios'})
+    }
+});
+app.get('/usuarios_deshabilitados', async (req,res) =>{
+    try {
+      const response = await axios.get(`http://localhost:6005/all_users_deshabilitados`, req.body);
+      res.status(201).json(response.data);
+    } catch (error) {
+        console.error('Error al comunicarse con el microservicio:', error);
+        res.status(500).json({error: 'Error al mostrar los usuarios'})
+    }
+});
 
 
 //Roles
@@ -50,7 +68,7 @@ app.post('/crear_rol', async (req,res) =>{
 app.post('/asignar_rol', async (req,res) =>{
 
     try {
-      const response = await axios.post(`http://localhost:6001/aisgnar_rol`, req.body);
+      const response = await axios.post(`http://localhost:6001/asignar_rol`, req.body);
       res.status(201).json(response.data);
     } catch (error) {
       console.error("Error al comunicarse con el microservicio");

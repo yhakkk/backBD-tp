@@ -67,13 +67,34 @@ const pool = new Pool({
     }
   });
   
-  app.get(`/all_users/:id`, async (req,res) =>{
-    
+  
+  app.get(`/all_users_habilitados`, async (req,res) =>{
 
+    try {
+      const client = await pool.connect();
+      const result = await client.query('SELECT * FROM usuario WHERE habilitado = 1')  
+      client.release();
+      res.json(result.rows);
+    } catch (error) {
+      console.error('Error al ejecutar la query',error);
+      res.status(500).json({error: 'Error al obtener los usuarios'});
+    }
+
+  });
+  app.get(`/all_users_deshabilitados`, async (req,res) =>{
+
+    try {
+      const client = await pool.connect();
+      const result = await client.query('SELECT * FROM usuario WHERE habilitado = 0')  
+      client.release();
+      res.json(result.rows);
+    } catch (error) {
+      console.error('Error al ejecutar la query',error);
+      res.status(500).json({error: 'Error al obtener los usuarios'});
+    }
 
   });
   
-
 
 
 
