@@ -66,7 +66,7 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
-
+//Endpoint de mercado libre. Realiza una verificación del token y luego consulta a la API de ML
 app.get('/mercadolibre', verifyToken, async (req, res) => {
   const busqueda = req.query.q;
   try {
@@ -82,7 +82,7 @@ app.get('/mercadolibre', verifyToken, async (req, res) => {
 
 if (require.main === module) {
   app.listen(PORT6, () => {
-    console.log(`Servidor de suma corriendo en http://localhost:${PORT6}`);
+    console.log(`Servidor microservices5.js corriendo en http://localhost:${PORT6}`);
   });
 }
 
