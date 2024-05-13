@@ -63,6 +63,17 @@ app.post('/asignar_rol', async (req, res) => {
   const { usuario_id, rol_id } = req.body;
   try {
     const client = await pool.connect();
+    const duplicado = await client.query(
+      'SELECT * FROM usuarios_roles WHERE usuario_id = $1 AND rol_id = $2',[usuario_id,rol_id]
+    );
+    
+    if(duplicado.rows.length > 0){
+      res.status(400).json({message: 'El rol ya esta asignado.'})
+      return;
+
+    }
+
+
     const result = await client.query(
       'INSERT INTO usuarios_roles (usuario_id, rol_id) VALUES ($1, $2) RETURNING *',
       [usuario_id, rol_id]

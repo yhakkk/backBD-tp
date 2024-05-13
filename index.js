@@ -3,12 +3,12 @@ require('dotenv').config();
 const axios = require("axios")
 const cors = require("cors");
 const app = express();
-const cookieParser = require('cookie-parser');
-const PORT = process.env.PORT;
+
+const PORT = process.env.PORT ;
 app.use(express.json());
 app.use(cors());
 
-app.use(cookieParser());
+const { verifyToken } = require('./microservices5');
 
 //Microservices1 - Usuario
 
@@ -51,6 +51,32 @@ app.get('/usuarios_deshabilitados', async (req,res) =>{
     }
 });
 
+//Habilitar/Deshabilitar Usuario
+
+app.patch('/habilitar_usuario/:id', async (req,res) =>{
+  const userId = req.params.id;
+  try {
+    const response = await axios.patch(`http://localhost:6002/habilitar_usuario/${userId}`,req.body)
+    res.status(201).json(response.data);
+  } catch (error) {
+    console.error('Error al comunicarse con el microservicio:', error);
+    res.status(500).json({error: 'Error al habilitar el usuario.'})
+  }
+
+});
+
+app.patch('/deshabilitar_usuario/:id', async (req,res) =>{
+  const userId = req.params.id;
+  try {
+    const response = await axios.patch(`http://localhost:6003/deshabilitar_usuario/${userId}`,req.body)
+    res.status(201).json(response.data);
+  } catch (error) {
+    console.error('Error al comunicarse con el microservicio:', error);
+    res.status(500).json({error: 'Error al habilitar el usuario.'})
+  }
+
+});
+
 
 //Roles
 
@@ -89,26 +115,24 @@ app.get('/rol_usuario', async (req,res) => {
     }
 });
 
-// Login-AUTH-API
+//Login-AUTH-API
 
-app.post('/login', async(req, res) => {
+app.post('/login', async (req, res) => {
   try {
     const response = await axios.post('http://localhost:6006/login', req.body);
-    const token = response.data.token; // Obtener el token de la respuesta
-    res.cookie('token', token, { maxAge: 3600000, httpOnly: true }); // Almacenar el token en una cookie con una duración de 1 hora
+    //const token = response.data.token;
     res.status(201).json(response.data);
   } catch (error) {
     console.error("Error al comunicarse con el microservicio.");
-    res.status(500).json({error:"Error al loguearse."});
+    res.status(500).json({ error: "Error al loguearse." });
   }
 });
 
 // Endpoint para realizar la búsqueda en MercadoLibre
-app.get('/mercadolibre', async (req, res) => {
+app.get('/mercadolibre', verifyToken, async (req, res) => {
   const busqueda = req.query.q;
   try {
-    const token = req.cookies.token; // Obtener el token de la cookie
-    console.log("Este es el token",token);
+    const token = req.headers.authorization.split(' ')[1]; // Obtener el token del encabezado de autorización
     const response = await axios.get(`http://localhost:6006/mercadolibre?q=${busqueda}`, { headers: { Authorization: `Bearer ${token}` } });
     res.status(200).json(response.data);
   } catch (error) {

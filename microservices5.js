@@ -48,7 +48,7 @@ app.post('/login', async (req, res) => {
  
    try {
     const client = await pool.connect();
-    const result = await client.query('SELECT * FROM usuario WHERE usuario = $1 AND pass = $2', [username, password]);
+    const result = await client.query('SELECT * FROM usuario WHERE usuario = $1 AND pass = $2 AND habilitado = 1', [username, password]);
     client.release();
 
     if (result.rows.length === 0) {
@@ -80,9 +80,14 @@ app.get('/mercadolibre', verifyToken, async (req, res) => {
 });
 
 
-
-app.listen(PORT6, () => {
+if (require.main === module) {
+  app.listen(PORT6, () => {
     console.log(`Servidor de suma corriendo en http://localhost:${PORT6}`);
   });
+}
 
+module.exports = {
+  verifyToken,
+  generateToken
+};
 
